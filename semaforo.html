@@ -183,6 +183,8 @@
             'comprar_lote': { name: 'Recomendaciones al Comprar Lote', icon: '🏕️', color: '#16a34a' }, // Green
             'construccion': { name: 'Recomendaciones al Construir', icon: '🚧', color: '#c2410c' }, // Orange
             'sostenibilidad': { name: 'Sostenibilidad y Acción Climática', icon: '🍃', color: '#15803d' }, // Green
+            'litorales': { name: 'Comprar en Litorales y Playas', icon: '🌊', color: '#0ea5e9' }, // Light Blue
+            'industria': { name: 'Cercanía a Industria/Agro', icon: '🚜', color: '#84cc16' }, // Lime Green
             'estructura': { name: 'Estructura y Acabados (Solo Casa Construida)', icon: '🏠', color: '#44403c' }, // Stone
             'ninos': { name: 'Niños y Familia', icon: '👶', color: '#be185d' },    // Pink
             'mascotas': { name: 'Mascotas', icon: '🐕', color: '#c2410c' } // Orange
@@ -251,16 +253,29 @@
             // Niños y Familia
             { id: 46, cat: 'ninos', text: 'Ventanas y Escaleras: Las escaleras deben tener barandas seguras sin espacios muy anchos donde quepa un niño, y las ventanas altas deben poder asegurarse.', state: 0, lblV: '🟢 Totalmente seguro', lblA: '🟡 Requiere mejoras', lblR: '🔴 Peligroso' },
             { id: 47, cat: 'ninos', text: 'Zona de Juegos: Evaluar si el patio o el parque del condominio es céntrico, plano, cerrado y seguro para que los niños jueguen sin riesgo de acceso a autos o barrancos.', state: 0, lblV: '🟢 Seguro y cerrado', lblA: '🟡 Semi abierto', lblR: '🔴 Peligroso/Abierto' },
+            { id: 62, cat: 'ninos', text: 'Proximidad a Educación y Centros de Consumo (Walkability): Para hacer su día más práctico, mida tiempos de traslado reales a guarderías, escuelas adecuadas y farmacias sin depender excesivamente de traslados vehiculares lentos.', state: 0, lblV: '🟢 Equipamiento cerca', lblA: '🟡 Viajes moderados', lblR: '🔴 Desconexión total de servicios' },
             
             // Mascotas
-            { id: 48, cat: 'mascotas', text: 'Cerramientos del lote: Confirmar que la propiedad cuente con tapias o mallas completas y en buen estado a la altura de su mascota (o que cuente con posibilidades fáciles y baratas de cerrarlo), sin huecos por cual los cuales pueda escapar.', state: 0, lblV: '🟢 Cerrado y seguro', lblA: '🟡 Huecos pequeños', lblR: '🔴 Mallas abiertas' },
+            { id: 48, cat: 'mascotas', text: 'Cerramientos del lote: Confirmar que la propiedad cuente con tapias o mallas completas y en buen estado a la altura de su mascota (o que cuente con posibilidades fáciles y baratas de cerrarlo), sin huecos por los cuales pueda escapar.', state: 0, lblV: '🟢 Cerrado y seguro', lblA: '🟡 Huecos pequeños', lblR: '🔴 Mallas abiertas' },
             { id: 49, cat: 'mascotas', text: 'Zonas Verdes y Reglamentos: Asegurarse de que exista un espacio exterior adecuado (tierra o zacate) y en caso de condominios, leer el reglamento previo para asegurar que se permitan su raza, peso y número de mascotas antes de firmar.', state: 0, lblV: '🟢 Todo apto', lblA: '🟡 Restricciones', lblR: '🔴 Prohibidas' },
+            { id: 61, cat: 'mascotas', text: 'Pisos y Acabados Pet-Friendly: Verificar si la casa cuenta con pisos que soporten tráfico pesado y fluidos sin estropearse o hincharse, y que las paredes faciliten la limpieza de manchas o marcas cotidianas en la parte baja.', state: 0, lblV: '🟢 Superficies lavables', lblA: '🟡 Requiere cierto cuidado', lblR: '🔴 Pisos muy delicados' },
 
             // Sostenibilidad
             { id: 50, cat: 'sostenibilidad', text: 'Programa Bandera Azul Ecológica (PBAE): Consultar si la zona, comunidad o proyecto figura en los registros de Bandera Azul, lo que asegura buenas prácticas hídricas y comunitarias reales y no solo panfletos.', state: 0, lblV: '🟢 Galardón Activo', lblA: '🟡 En proceso', lblR: '🔴 Sin interés ecológico' },
             { id: 51, cat: 'sostenibilidad', text: 'Programas de Gestión Ambiental (DIGECA): Si es un proyecto o condominio complejo, verificar que la constructora o administración posea lineamientos estrictos (tipo PGAI) para optimar su impacto eléctrico, hídrico y de basuras.', state: 0, lblV: '🟢 Programa Vigente', lblA: '🟡 Prácticas Informales', lblR: '🔴 Ningún Programa' },
             { id: 52, cat: 'sostenibilidad', text: 'Resiliencia al Cambio Climático (MINAE): Verificar si el terreno posee áreas de terreno verdes y "permeables" reales para infiltrar el agua llovida. En tiempos de intensas lluvias, asfaltar o concretar el 100% colapsa aceras y genera inundaciones violentas en su calle.', state: 0, lblV: '🟢 Alta infiltración', lblA: '🟡 Medio concreto/tierra', lblR: '🔴 100% Pavimentado' },
-            { id: 53, cat: 'sostenibilidad', text: 'No caiga en Greenwashing: Dude de ideas "falsamente ecológicas" (ej. mingitorios "sin agua" en áreas públicas que se anuncian para ahorrar, pero terminan concentrando orina pura altamente tóxica y ácida directo hacia los cauces sin disolución). Prefiera sistemas de tratamiento biológico/mecánico certificados operando al 100%.', state: 0, lblV: '🟢 Tratamiento Real', lblA: '🟡 Pocas medidas', lblR: '🔴 Greenwashing obvio' }
+            { id: 53, cat: 'sostenibilidad', text: 'No caiga en Greenwashing: Dude de ideas "falsamente ecológicas" (ej. mingitorios "sin agua" en áreas públicas que se anuncian para ahorrar, pero terminan concentrando orina pura altamente tóxica y ácida directo hacia los cauces sin disolución). Prefiera sistemas de tratamiento biológico/mecánico certificados operando al 100%.', state: 0, lblV: '🟢 Tratamiento Real', lblA: '🟡 Pocas medidas', lblR: '🔴 Greenwashing obvio' },
+            
+            // Litorales y Playas
+            { id: 54, cat: 'litorales', text: 'Zona Marítimo Terrestre: Confirmar que la propiedad está avalada legalmente (titulada o concesión inscrita), evite adquirir derechos posesorios en la zona inalienable pública de 50 metros donde el estado puede sacarlo en cualquier momento.', state: 0, lblV: '🟢 Titulado/Concesión Firme', lblA: '🟡 Derechos sin aval', lblR: '🔴 En Zona Pública' },
+            { id: 55, cat: 'litorales', text: 'Tsunamis y Mareas Altas: Investigue la historia del terreno. Valore los mapas locales de rutas de evacuación CNE, previendo aumentos extremos de marea. Asegure construir en puntos elevados del terreno costero.', state: 0, lblV: '🟢 Zona segura/elevada', lblA: '🟡 Riesgo intermedio', lblR: '🔴 Zona de inundación marina' },
+            { id: 56, cat: 'litorales', text: 'Efectos de Salinidad y Humedad: El salitre destruirá rápido las casas regulares. Verifique si la casa usa mallas revestidas, aceros inoxidables, aluminio y acabados plásticos en lugar de metales comunes y maderas no curadas.', state: 0, lblV: '🟢 Materiales Marinos', lblA: '🟡 Tratamiento regular', lblR: '🔴 Materiales muy oxidables' },
+            { id: 57, cat: 'litorales', text: 'Intrusión Salina en Pozos: Si el terreno depende de agua de pozo, se debe verificar mediante examen de laboratorio que no exista contaminación con agua salada (intrusión salina), un problema grave en las costas por sobreexplotación.', state: 0, lblV: '🟢 Agua dulce certificada', lblA: '🟡 Sin estudios', lblR: '🔴 Pozo salinizado' },
+
+            // Industria y Agro
+            { id: 58, cat: 'industria', text: 'Aeropuertos o Rutas Aéreas: Considerar la cercanía a aeropuertos o aeródromos. Evalúe el impacto crónico del ruido sobre la tranquilidad, así como el margen de riesgo por caída de objetos o accidentes aéreos sobre la propiedad en las rutas directas de despegue/aterrizaje.', state: 0, lblV: '🟢 Lejano/Silencioso', lblA: '🟡 Ruido audible lejano', lblR: '🔴 Riesgo rutero / Mucho ruido' },
+            { id: 59, cat: 'industria', text: 'Agroindustria y Fumigación: Proyectos colindantes con áreas agrícolas corren peligro de intoxicación constante por agroquímicos (llevados por el viento), perjudicando la salud y contaminando los pozos / mantos acuíferos vecinos.', state: 0, lblV: '🟢 Sin Agroquímicos', lblA: '🟡 Cultivos orgánicos cercanos', lblR: '🔴 Fumigaciones tóxicas masivas' },
+            { id: 60, cat: 'industria', text: 'Zonas Industriales, Bodegas o Tajos: La proximidad implica tránsito constante de camiones de carga pesada que destruyen calles locales, emiten ruido a deshoras, generan polvo asfixiante y elevan el riesgo de choques al entrar/salir del proyecto.', state: 0, lblV: '🟢 Entorno Residencial', lblA: '🟡 Tránsito comercial leve', lblR: '🔴 Industria pesada vecina' }
         ];
 
         // State Management - States: 0(Pending), 1(Verde), 2(Amarillo), 3(Rojo), 4(N/A)
@@ -268,6 +283,14 @@
 
         // 2. Initialization
         document.addEventListener('DOMContentLoaded', () => {
+            // Asignar el factor crítico: los IDs explícitamente graves (dealbreakers) para el Semáforo General
+            const criticalIds = [1, 2, 3, 4, 6, 7, 8, 9, 14, 15, 16, 17, 18, 19, 20, 26, 27, 31, 35, 46, 47, 48, 52, 54, 55, 57, 58, 59, 60];
+            auditData.forEach(item => {
+                if (criticalIds.includes(item.id)) {
+                    item.critical = true;
+                }
+            });
+
             renderFilters();
             renderCategoryLightsContainer();
             renderChecklist();
@@ -377,6 +400,7 @@
 
         function updateDashboard() {
             let vCount = 0, aCount = 0, rCount = 0, assessed = 0, totalAppliable = 0;
+            let critA = 0, critR = 0;
             
             // Map to store states per category to determine mini lights
             const catStates = {};
@@ -387,8 +411,8 @@
             auditData.forEach(i => {
                 if(i.state !== 4 && i.state !== 0) {
                     if(i.state === 1) { vCount++; catStates[i.cat].v++; }
-                    if(i.state === 2) { aCount++; catStates[i.cat].a++; }
-                    if(i.state === 3) { rCount++; catStates[i.cat].r++; }
+                    if(i.state === 2) { aCount++; catStates[i.cat].a++; if(i.critical) critA++; }
+                    if(i.state === 3) { rCount++; catStates[i.cat].r++; if(i.critical) critR++; }
                 }
                 if(i.state !== 4) totalAppliable++; 
                 if(i.state !== 0) assessed++;
@@ -436,18 +460,22 @@
                 statusText.innerText = 'Sin Evaluar';
                 statusText.className = 'text-sm font-semibold text-stone-600 text-center uppercase tracking-wider mt-2';
             } else {
-                // Determine general state
-                // General Rojo: >= 2 puntos en Rojo
-                // General Amarillo: 1 Rojo OR >= 3 Amarillos
-                // General Verde: 0 Rojos AND <= 2 Amarillos
+                // Determine general state ONLY based on critical cards
+                // General Rojo: >= 2 puntos Críticos en Rojo
+                // General Amarillo: 1 Rojo Crítico OR >= 3 Amarillos Críticos
+                // General Verde: Todo lo demás (sin riesgos de fatalidad o rechazo total)
                 
-                if (rCount >= 2) {
+                if (critR >= 2) {
                     glRed.classList.add('red-on');
                     statusText.innerText = 'RIESGO ALTO (ROJO)';
                     statusText.className = 'text-sm font-bold text-rose-600 text-center uppercase tracking-wider mt-2';
-                } else if (rCount === 1 || aCount >= 3) {
+                } else if (critR === 1 || critA >= 3) {
                     glYellow.classList.add('yellow-on');
-                    statusText.innerText = 'PRECAUCIÓN (AMARILLO)';
+                    statusText.innerText = 'PRECAUCIÓN MAYOR (AMARILLO)';
+                    statusText.className = 'text-sm font-bold text-amber-600 text-center uppercase tracking-wider mt-2';
+                } else if (critA >= 1) {
+                    glYellow.classList.add('yellow-on');
+                    statusText.innerText = 'PRECAUCIÓN MENOR (AMARILLO)';
                     statusText.className = 'text-sm font-bold text-amber-600 text-center uppercase tracking-wider mt-2';
                 } else {
                     glGreen.classList.add('green-on');
