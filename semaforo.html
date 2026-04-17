@@ -150,27 +150,7 @@
                     </div>
                 </div>
 
-                <!-- Summary Card -->
-                <div class="bg-stone-800 text-stone-100 rounded-xl shadow-sm p-6">
-                    <h3 class="text-lg font-bold mb-4">Resumen de Alertas</h3>
-                    <div class="grid grid-cols-3 gap-2 text-center">
-                        <div class="bg-stone-700 rounded-lg p-2 border-b-2 border-emerald-500">
-                            <div id="count-verde" class="text-xl font-bold text-emerald-400">0</div>
-                            <div class="text-[10px] text-stone-300 uppercase mt-1">Verdes</div>
-                        </div>
-                        <div class="bg-stone-700 rounded-lg p-2 border-b-2 border-amber-500">
-                            <div id="count-amarillo" class="text-xl font-bold text-amber-400">0</div>
-                            <div class="text-[10px] text-stone-300 uppercase mt-1">Amarillos</div>
-                        </div>
-                        <div class="bg-stone-700 rounded-lg p-2 border-b-2 border-rose-500">
-                            <div id="count-rojo" class="text-xl font-bold text-rose-400">0</div>
-                            <div class="text-[10px] text-stone-300 uppercase mt-1">Rojos</div>
-                        </div>
-                    </div>
-                    <p class="text-xs text-stone-400 mt-4 leading-tight text-center">
-                        Los amarillos implican prevención temporal o mayores costos. Los rojos señalan un riesgo crítico que exige replantear la inversión. En ambos casos le recomendamos buscar el criterio experto de AgriCien.
-                    </p>
-                </div>
+                <!-- Summary Card Removed and transformed into fixed footer -->
 
             </section>
 
@@ -178,12 +158,47 @@
         </div>
     </main>
 
-    <footer class="bg-stone-900 text-stone-400 py-6 text-center text-sm mt-auto">
+    <footer class="bg-stone-900 text-stone-400 pt-6 pb-24 text-center text-sm mt-auto">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <p>Herramienta analítica para viabilidad en campos, lotes y viviendas. La información no sustituye el criterio técnico profesional certificado en SETENA (geólogo, ingeniero, abogado).</p>
             <p class="mt-2 text-stone-500 font-semibold tracking-wide">Developer: Edgar Méndez</p>
         </div>
     </footer>
+
+    <!-- Fixed Summary Footer -->
+    <div class="fixed bottom-0 w-full bg-stone-900 border-t border-stone-700 p-3 z-50 shadow-[0_-4px_10px_rgba(0,0,0,0.3)]">
+        <div class="max-w-7xl mx-auto flex items-center justify-between px-2 sm:px-6 lg:px-8">
+            <h3 class="text-stone-300 font-bold text-sm sm:text-base hidden sm:block">Resumen de Alertas</h3>
+            <h3 class="text-stone-300 font-bold text-xs sm:hidden">Resumen:</h3>
+            <div class="flex gap-2 sm:gap-3 flex-grow sm:flex-grow-0 justify-end">
+                <button onclick="showInfoPopup('verde')" class="bg-stone-800 rounded-lg px-4 py-1.5 border-b-2 border-emerald-500 hover:bg-stone-700 transition flex items-center gap-2 cursor-pointer shadow-sm">
+                    <span class="text-[10px] text-stone-400 uppercase hidden sm:inline">Verdes</span>
+                    <span id="count-verde" class="text-lg font-bold text-emerald-400">0</span>
+                </button>
+                <button onclick="showInfoPopup('amarillo')" class="bg-stone-800 rounded-lg px-4 py-1.5 border-b-2 border-amber-500 hover:bg-stone-700 transition flex items-center gap-2 cursor-pointer shadow-sm">
+                    <span class="text-[10px] text-stone-400 uppercase hidden sm:inline">Amarillos</span>
+                    <span id="count-amarillo" class="text-lg font-bold text-amber-400">0</span>
+                </button>
+                <button onclick="showInfoPopup('rojo')" class="bg-stone-800 rounded-lg px-4 py-1.5 border-b-2 border-rose-500 hover:bg-stone-700 transition flex items-center gap-2 cursor-pointer shadow-sm">
+                    <span class="text-[10px] text-stone-400 uppercase hidden sm:inline">Rojos</span>
+                    <span id="count-rojo" class="text-lg font-bold text-rose-400">0</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Info Popup Template -->
+    <div id="info-popup" class="fixed inset-0 bg-black bg-opacity-60 z-[100] flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-stone-800 border border-stone-600 rounded-xl max-w-sm w-11/12 p-6 shadow-2xl transform scale-95 transition-transform duration-300" id="info-popup-card">
+            <h3 id="popup-title" class="text-xl font-bold text-stone-100 mb-3">Información de Alerta</h3>
+            <p id="popup-text" class="text-stone-300 text-sm leading-relaxed mb-6">
+                <!-- Text injected via JS -->
+            </p>
+            <div class="text-right">
+                <button onclick="closeInfoPopup()" class="bg-stone-600 hover:bg-stone-500 text-white font-semibold py-2 px-6 rounded-lg transition cursor-pointer">Entendido</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Application Logic -->
     <script>
@@ -526,6 +541,47 @@
                     statusText.className = 'text-sm font-bold text-emerald-600 text-center uppercase tracking-wider mt-2';
                 }
             }
+        }
+
+        function showInfoPopup(color) {
+            const popup = document.getElementById('info-popup');
+            const popupCard = document.getElementById('info-popup-card');
+            const title = document.getElementById('popup-title');
+            const text = document.getElementById('popup-text');
+
+            if(color === 'verde') {
+                title.innerText = 'Alertas Verdes (Viables)';
+                title.className = 'text-xl font-bold text-emerald-400 mb-3';
+                text.innerHTML = 'Los verdes indican que el proyecto no presenta riesgos conocidos o cumple adecuadamente este parámetro técnico.';
+            } else if(color === 'amarillo') {
+                title.innerText = 'Alertas Amarillas (Precaución)';
+                title.className = 'text-xl font-bold text-amber-400 mb-3';
+                text.innerHTML = 'Los amarillos implican <strong>prevención temporal o mayores costos</strong>. Le recomendamos encarecidamente buscar el criterio experto de AgriCien.';
+            } else if(color === 'rojo') {
+                title.innerText = 'Alertas Rojas (Riesgo Crítico)';
+                title.className = 'text-xl font-bold text-rose-400 mb-3';
+                text.innerHTML = 'Los rojos señalan un <strong>riesgo crítico extremo</strong> que exige replantear la inversión o descartarla. En estos casos le recomendamos buscar el criterio experto de AgriCien de inmediato.';
+            }
+
+            popup.classList.remove('hidden');
+            setTimeout(() => {
+                popup.classList.remove('opacity-0');
+                popupCard.classList.remove('scale-95');
+                popupCard.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeInfoPopup() {
+            const popup = document.getElementById('info-popup');
+            const popupCard = document.getElementById('info-popup-card');
+            
+            popup.classList.add('opacity-0');
+            popupCard.classList.remove('scale-100');
+            popupCard.classList.add('scale-95');
+            
+            setTimeout(() => {
+                popup.classList.add('hidden');
+            }, 300);
         }
     </script>
 </body>
