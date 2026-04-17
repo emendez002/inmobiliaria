@@ -51,22 +51,35 @@
 
     <!-- Header -->
     <header class="bg-white shadow-sm border-b border-stone-200 sticky top-0 z-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
-            <div class="flex items-center gap-4">
-                <a href="https://emendez002.github.io/agricien/" target="_blank" rel="noopener noreferrer" class="hover:opacity-80 transition-opacity">
-                    <img src="https://images.squarespace-cdn.com/content/v1/5bd1dc11c46f6d371c488433/1540486117041-YQVF9DGXX9520IEEVI1E/image-asset.png" alt="Logo" class="h-20 sm:h-24 w-auto object-contain">
-                </a>
-                <div>
-                    <h1 class="text-2xl font-bold text-stone-900">🏠 Semáforo de Viabilidad</h1>
-                    <p class="text-sm text-stone-500 hidden sm:block">Filtre y evalúe para determinar la viabilidad del proyecto antes de invertir.</p>
-                </div>
+        <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-3 flex justify-between items-center gap-2 sm:gap-4">
+            <!-- Left: Logo -->
+            <a href="https://emendez002.github.io/agricien/" target="_blank" rel="noopener noreferrer" class="hover:opacity-80 transition-opacity flex-shrink-0">
+                <img src="https://images.squarespace-cdn.com/content/v1/5bd1dc11c46f6d371c488433/1540486117041-YQVF9DGXX9520IEEVI1E/image-asset.png" alt="Logo" class="h-10 sm:h-24 w-auto object-contain">
+            </a>
+            
+            <!-- Center: Title -->
+            <div class="flex-grow text-center text-stone-900">
+                <h1 class="text-lg sm:text-2xl font-bold leading-tight">🏠 Semáforo de Viabilidad</h1>
+                <p class="text-sm text-stone-500 hidden sm:block mt-1">Filtre y evalúe para determinar la viabilidad del proyecto antes de invertir.</p>
             </div>
-            <div class="text-center sm:text-right w-full sm:w-auto flex flex-col items-center sm:items-end">
-                <div class="text-xs text-stone-500 uppercase tracking-wider font-semibold mb-1">Progreso General</div>
-                <div class="w-full sm:w-48 bg-stone-200 rounded-full h-2.5 max-w-[200px]">
-                    <div id="overall-progress" class="bg-amber-600 h-2.5 rounded-full" style="width: 0%"></div>
+
+            <!-- Right: Small Semaphore in Mobile / Progress in Desktop -->
+            <div class="flex-shrink-0 flex items-center justify-end">
+                <!-- Mobile Semaphore -->
+                <div class="flex sm:hidden items-center justify-center p-1.5 bg-stone-800 rounded-full shadow-inner gap-1">
+                    <div id="hdr-light-red" class="w-3 h-3 rounded-full bg-stone-600 transition-colors"></div>
+                    <div id="hdr-light-yellow" class="w-3 h-3 rounded-full bg-stone-600 transition-colors"></div>
+                    <div id="hdr-light-green" class="w-3 h-3 rounded-full bg-stone-600 transition-colors"></div>
                 </div>
-                <div id="progress-text" class="text-xs text-stone-600 mt-1">0% completado</div>
+
+                <!-- Desktop Progress -->
+                <div class="hidden sm:flex flex-col items-end w-48">
+                    <div class="text-xs text-stone-500 uppercase tracking-wider font-semibold mb-1">Progreso General</div>
+                    <div class="w-full bg-stone-200 rounded-full h-2.5">
+                        <div id="overall-progress" class="bg-amber-600 h-2.5 rounded-full" style="width: 0%"></div>
+                    </div>
+                    <div id="progress-text" class="text-xs text-stone-600 mt-1">0% completado</div>
+                </div>
             </div>
         </div>
     </header>
@@ -75,7 +88,7 @@
     <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
         
         <!-- Introduction -->
-        <div class="bg-white rounded-xl shadow-sm p-6 mb-8 border border-stone-200">
+        <div class="bg-white rounded-xl shadow-sm p-6 mb-8 border border-stone-200 hidden sm:block">
             <h2 class="text-xl font-bold mb-2">Bienvenido a su Asesor de Inversión Inmobiliaria</h2>
             <p class="text-stone-600 leading-relaxed">
                 Esta aplicación transforma los consejos técnicos de inspección de propiedades en una auditoría interactiva. 
@@ -86,20 +99,20 @@
         <div class="flex flex-col lg:flex-row gap-8">
             
             <!-- Left Column: Interactive Checklist -->
-            <section class="lg:w-2/3 flex flex-col h-[800px]">
+            <section class="lg:w-2/3 flex flex-col h-auto sm:h-[800px]">
                 
-                <div class="mb-4">
+                <div class="mb-4 hidden sm:block">
                     <h3 class="text-lg font-bold text-stone-800 mb-2">Lista de Verificación</h3>
                     <p class="text-sm text-stone-500 mb-4">Seleccione el color aplicable a la situación real de la propiedad en cada punto.</p>
                     
                     <!-- Category Filters -->
-                    <div id="category-filters" class="flex flex-wrap gap-2 mb-4">
+                    <div id="category-filters" class="flex overflow-x-auto sm:flex-wrap gap-2 mb-4 pb-2 snap-x scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                         <!-- Buttons injected via JS -->
                     </div>
                 </div>
 
                 <!-- Checklist Container (Scrollable) -->
-                <div id="checklist-container" class="bg-white border border-stone-200 rounded-xl shadow-sm flex-grow overflow-y-auto custom-scrollbar p-2 sm:p-4">
+                <div id="checklist-container" class="sm:bg-white sm:border sm:border-stone-200 sm:rounded-xl sm:shadow-sm flex-grow overflow-visible sm:overflow-y-auto custom-scrollbar sm:p-4">
                     <!-- Items injected via JS -->
                 </div>
             </section>
@@ -318,14 +331,14 @@
             const container = document.getElementById('category-filters');
             
             let btnAll = document.createElement('button');
-            btnAll.className = `px-4 py-2 rounded-full text-sm font-semibold transition-colors border ${currentFilter === 'todos' ? 'bg-stone-800 text-white border-stone-800' : 'bg-white text-stone-600 border-stone-300 hover:bg-stone-100'}`;
+            btnAll.className = `px-4 py-2 rounded-full text-sm font-semibold transition-colors border flex-shrink-0 whitespace-nowrap snap-start ${currentFilter === 'todos' ? 'bg-stone-800 text-white border-stone-800' : 'bg-white text-stone-600 border-stone-300 hover:bg-stone-100'}`;
             btnAll.innerText = '📋 Todos';
             btnAll.onclick = () => setFilter('todos');
             container.appendChild(btnAll);
 
             for (const [key, data] of Object.entries(categories)) {
                 let btn = document.createElement('button');
-                btn.className = `px-4 py-2 rounded-full text-sm font-semibold transition-colors border ${currentFilter === key ? 'bg-stone-800 text-white border-stone-800' : 'bg-white text-stone-600 border-stone-300 hover:bg-stone-100'}`;
+                btn.className = `px-4 py-2 rounded-full text-sm font-semibold transition-colors border flex-shrink-0 whitespace-nowrap snap-start ${currentFilter === key ? 'bg-stone-800 text-white border-stone-800' : 'bg-white text-stone-600 border-stone-300 hover:bg-stone-100'}`;
                 btn.innerHTML = `${data.icon} ${data.name}`;
                 btn.onclick = () => setFilter(key);
                 container.appendChild(btn);
@@ -468,9 +481,19 @@
             const glGreen = document.getElementById('light-general-green');
             const statusText = document.getElementById('general-status-text');
 
+            const hdrRed = document.getElementById('hdr-light-red');
+            const hdrYellow = document.getElementById('hdr-light-yellow');
+            const hdrGreen = document.getElementById('hdr-light-green');
+
             glRed.classList.remove('red-on');
             glYellow.classList.remove('yellow-on');
             glGreen.classList.remove('green-on');
+
+            if (hdrRed) {
+                hdrRed.style.backgroundColor = '#57534e';
+                hdrYellow.style.backgroundColor = '#57534e';
+                hdrGreen.style.backgroundColor = '#57534e';
+            }
 
             if(vCount === 0 && aCount === 0 && rCount === 0) {
                 statusText.innerText = 'Sin Evaluar';
@@ -483,18 +506,22 @@
                 
                 if (critR >= 2) {
                     glRed.classList.add('red-on');
+                    if (hdrRed) hdrRed.style.backgroundColor = '#ef4444';
                     statusText.innerText = 'RIESGO ALTO (ROJO)';
                     statusText.className = 'text-sm font-bold text-rose-600 text-center uppercase tracking-wider mt-2';
                 } else if (critR === 1 || critA >= 3) {
                     glYellow.classList.add('yellow-on');
+                    if (hdrYellow) hdrYellow.style.backgroundColor = '#f59e0b';
                     statusText.innerText = 'PRECAUCIÓN MAYOR (AMARILLO)';
                     statusText.className = 'text-sm font-bold text-amber-600 text-center uppercase tracking-wider mt-2';
                 } else if (critA >= 1) {
                     glYellow.classList.add('yellow-on');
+                    if (hdrYellow) hdrYellow.style.backgroundColor = '#f59e0b';
                     statusText.innerText = 'PRECAUCIÓN MENOR (AMARILLO)';
                     statusText.className = 'text-sm font-bold text-amber-600 text-center uppercase tracking-wider mt-2';
                 } else {
                     glGreen.classList.add('green-on');
+                    if (hdrGreen) hdrGreen.style.backgroundColor = '#10b981';
                     statusText.innerText = 'VIABLE (VERDE)';
                     statusText.className = 'text-sm font-bold text-emerald-600 text-center uppercase tracking-wider mt-2';
                 }
