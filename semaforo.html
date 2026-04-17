@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auditoría Inteligente: Compra y Construcción de Propiedades</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Application Structure Plan: The application is structured as an interactive "Property Audit Dashboard". The left panel presents an interactive checklist grouped by these categories. The right panel displays a dynamic Traffic Light representing risk. -->
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* Custom Scrollbar for the checklist area */
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f5f5f4; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #d6d3d1; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #a8a29e; }
+
+        /* Traffic Light Styles */
+        .tl-light {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: #44403c; /* off state */
+            transition: all 0.3s ease;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+            border: 2px solid #292524;
+        }
+        .tl-light.green-on { background-color: #10b981; box-shadow: 0 0 15px #10b981, inset 0 2px 4px rgba(255,255,255,0.4); border-color: #059669; }
+        .tl-light.yellow-on { background-color: #f59e0b; box-shadow: 0 0 15px #f59e0b, inset 0 2px 4px rgba(255,255,255,0.4); border-color: #d97706; }
+        .tl-light.red-on { background-color: #ef4444; box-shadow: 0 0 15px #ef4444, inset 0 2px 4px rgba(255,255,255,0.4); border-color: #dc2626; }
+        
+        .tl-mini {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: #e7e5e4;
+            transition: all 0.3s ease;
+        }
+        .tl-mini.green-on { background-color: #10b981; }
+        .tl-mini.yellow-on { background-color: #f59e0b; }
+        .tl-mini.red-on { background-color: #ef4444; }
+    </style>
+</head>
+<body class="bg-stone-100 text-stone-800 antialiased min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-stone-200 sticky top-0 z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-4">
+                <img src="https://images.squarespace-cdn.com/content/v1/5bd1dc11c46f6d371c488433/1540486117041-YQVF9DGXX9520IEEVI1E/image-asset.png" alt="Logo" class="h-10 w-auto object-contain">
+                <div>
+                    <h1 class="text-2xl font-bold text-stone-900">🏠 Semáforo de Viabilidad</h1>
+                    <p class="text-sm text-stone-500 hidden sm:block">Filtre y evalúe para determinar la viabilidad del proyecto antes de invertir.</p>
+                </div>
+            </div>
+            <div class="text-center sm:text-right w-full sm:w-auto flex flex-col items-center sm:items-end">
+                <div class="text-xs text-stone-500 uppercase tracking-wider font-semibold mb-1">Progreso General</div>
+                <div class="w-full sm:w-48 bg-stone-200 rounded-full h-2.5 max-w-[200px]">
+                    <div id="overall-progress" class="bg-amber-600 h-2.5 rounded-full" style="width: 0%"></div>
+                </div>
+                <div id="progress-text" class="text-xs text-stone-600 mt-1">0% completado</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+        
+        <!-- Introduction -->
+        <div class="bg-white rounded-xl shadow-sm p-6 mb-8 border border-stone-200">
+            <h2 class="text-xl font-bold mb-2">Bienvenido a su Asesor de Inversión Inmobiliaria</h2>
+            <p class="text-stone-600 leading-relaxed">
+                Esta aplicación transforma los consejos técnicos de inspección de propiedades en una auditoría interactiva. 
+                <strong>El objetivo:</strong> mitigar riesgos antes de comprar o construir. A medida que evalúe y asigne luces a cada punto, el panel derecho actualizará el <strong>Semáforo General</strong> para brindarle una recomendación visual rápida del nivel de riesgo.
+            </p>
+        </div>
+
+        <div class="flex flex-col lg:flex-row gap-8">
+            
+            <!-- Left Column: Interactive Checklist -->
+            <section class="lg:w-2/3 flex flex-col h-[800px]">
+                
+                <div class="mb-4">
+                    <h3 class="text-lg font-bold text-stone-800 mb-2">Lista de Verificación</h3>
+                    <p class="text-sm text-stone-500 mb-4">Seleccione el color aplicable a la situación real de la propiedad en cada punto.</p>
+                    
+                    <!-- Category Filters -->
+                    <div id="category-filters" class="flex flex-wrap gap-2 mb-4">
+                        <!-- Buttons injected via JS -->
+                    </div>
+                </div>
+
+                <!-- Checklist Container (Scrollable) -->
+                <div id="checklist-container" class="bg-white border border-stone-200 rounded-xl shadow-sm flex-grow overflow-y-auto custom-scrollbar p-2 sm:p-4">
+                    <!-- Items injected via JS -->
+                </div>
+            </section>
+
+            <!-- Right Column: Dashboard & Visualization -->
+            <section class="lg:w-1/3 flex flex-col gap-6">
+                
+                <!-- Traffic Light Card -->
+                <div class="bg-white border border-stone-200 rounded-xl shadow-sm p-6 flex flex-col items-center">
+                    <h3 class="text-xl font-bold text-stone-800 mb-1">Semáforo General</h3>
+                    <p class="text-xs text-stone-500 mb-6 text-center">Indica el nivel de riesgo global del proyecto.</p>
+                    
+                    <!-- Main Traffic Light -->
+                    <div class="bg-stone-800 p-4 rounded-3xl flex flex-col items-center gap-4 mb-4 shadow-lg">
+                        <div id="light-general-red" class="tl-light"></div>
+                        <div id="light-general-yellow" class="tl-light"></div>
+                        <div id="light-general-green" class="tl-light"></div>
+                    </div>
+                    
+                    <p id="general-status-text" class="text-sm font-semibold text-stone-600 text-center uppercase tracking-wider">Sin Evaluar</p>
+                </div>
+
+                <!-- Mini Traffic Lights per Category -->
+                <div class="bg-white border border-stone-200 rounded-xl shadow-sm p-6">
+                    <h3 class="text-md font-bold text-stone-800 mb-4">Semáforos por Tema</h3>
+                    <div id="category-lights" class="flex flex-col gap-3">
+                        <!-- Injected via JS -->
+                    </div>
+                </div>
+
+                <!-- Summary Card -->
+                <div class="bg-stone-800 text-stone-100 rounded-xl shadow-sm p-6">
+                    <h3 class="text-lg font-bold mb-4">Resumen de Alertas</h3>
+                    <div class="grid grid-cols-3 gap-2 text-center">
+                        <div class="bg-stone-700 rounded-lg p-2 border-b-2 border-emerald-500">
+                            <div id="count-verde" class="text-xl font-bold text-emerald-400">0</div>
+                            <div class="text-[10px] text-stone-300 uppercase mt-1">Verdes</div>
+                        </div>
+                        <div class="bg-stone-700 rounded-lg p-2 border-b-2 border-amber-500">
+                            <div id="count-amarillo" class="text-xl font-bold text-amber-400">0</div>
+                            <div class="text-[10px] text-stone-300 uppercase mt-1">Amarillos</div>
+                        </div>
+                        <div class="bg-stone-700 rounded-lg p-2 border-b-2 border-rose-500">
+                            <div id="count-rojo" class="text-xl font-bold text-rose-400">0</div>
+                            <div class="text-[10px] text-stone-300 uppercase mt-1">Rojos</div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-stone-400 mt-4 leading-tight text-center">
+                        Los amarillos implican prevención temporal o mayores costos. Los rojos señalan un riesgo crítico que exige replantear la inversión.
+                    </p>
+                </div>
+
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="bg-stone-900 text-stone-400 py-6 text-center text-sm mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <p>Herramienta analítica para viabilidad en campos, lotes y viviendas. La información no sustituye el criterio técnico profesional certificado en SETENA (geólogo, ingeniero, abogado).</p>
+            <p class="mt-2 text-stone-500 font-semibold tracking-wide">Developer: Edgar Méndez</p>
+        </div>
+    </footer>
+
+    <!-- Application Logic -->
+    <script>
+        // 1. Data Structure definition
+        const categories = {
+            'entorno': { name: 'Geología y Entorno (Lote/Casa)', icon: '🌍', color: '#b45309' }, // Amber
+            'servicios': { name: 'Servicios e Internet (Lote/Casa)', icon: '🚌', color: '#6366f1' }, // Indigo
+            'legal': { name: 'Legal y Trámites (Lote/Casa)', icon: '⚖️', color: '#0369a1' },     // Sky
+            'agua': { name: 'Agua y Plomería (Lote/Casa)', icon: '💧', color: '#0e7490' },     // Cyan
+            'electricidad': { name: 'Electricidad (Lote/Casa)', icon: '⚡', color: '#eab308' },    // Yellow
+            'estructura': { name: 'Estructura y Acabados (Solo Casa Construida)', icon: '🏠', color: '#44403c' } // Stone
+        };
+
+        const auditData = [
+            // Geología y Entorno
+            { id: 1, cat: 'entorno', text: 'Observar que NO haya rocas muy redondas en el terreno o bordes (son evidencia de que por ahí pasan corrientes fuertes de agua que arrastran materiales).', state: 0 },
+            { id: 2, cat: 'entorno', text: 'Revisar si en los paredones vecinos hay tierra mezclada con rocas de varios tamaños (grandes, medianas y pequeñas). Esto indica que el terreno fue formado por deslizamientos o inundaciones previas y podría repetirse.', state: 0 },
+            { id: 3, cat: 'entorno', text: 'Buscar si en la montaña o paredón hay marcas con forma de "cuchara de helado". Es la huella de un deslizamiento antiguo. En geología, lo que pasó antes volverá a ocurrir.', state: 0 },
+            { id: 4, cat: 'entorno', text: 'Caminar por la calle y aceras frontales asegurando que no haya hundimientos o grietas marcadas (estas grietas delatan suelos inestables, muy arcillosos o que se están resbalando lentamente).', state: 0 },
+            { id: 5, cat: 'entorno', text: 'Si compra lote: hacer un hueco pequeño, llenarlo de agua y ver si se absorbe rápido. Si el agua se queda estancada mucho tiempo, el suelo es arcilloso. Esto encarece los cimientos y complica usar un tanque de aguas negras.', state: 0 },
+            { id: 6, cat: 'entorno', text: 'Comprar una ubicación donde el viento NO sople desde la ciudad hacia su casa, para evitar que el aire arrastre la contaminación hacia su propiedad.', state: 0 },
+            { id: 7, cat: 'entorno', text: 'Verificar lejanía absoluta de rellenos sanitarios, botaderos, línea del tren o terminales de buses para blindarse contra ruidos fuertes, malos olores y contaminación química.', state: 0 },
+            
+            // Servicios e Internet
+            { id: 8, cat: 'servicios', text: 'Observar los techos de las casas vecinas. Si casi todos tienen tanques de reserva de agua a la vista, es una zona con problemas graves de escasez de agua.', state: 0 },
+            { id: 9, cat: 'servicios', text: 'Buscar un hidrante de los bomberos en la cuadra. Ante un incendio, tener agua cerca salva vidas.', state: 0 },
+            { id: 10, cat: 'servicios', text: 'Mirar el frente del terreno y confirmar que NO hay postes de luz grandes, alcantarillas o infraestructura pública atravesados que impidan meter un vehículo a la propiedad.', state: 0 },
+            { id: 11, cat: 'servicios', text: 'Prueba de tráfico: Usar Waze o Google Maps en horas pico (7am - 5pm) para comprobar si el tiempo de viaje realista entre la casa y el trabajo/escuela es soportable.', state: 0 },
+            { id: 12, cat: 'servicios', text: 'Caminar por el barrio asegurando que el acceso a paradas de bus o transporte público sea seguro y cercano (si algún miembro de la familia lo ocupará).', state: 0 },
+            { id: 13, cat: 'servicios', text: 'Confirmar opciones de Internet: Si hay fibra óptica disponible en la calle mucho mejor, si no confirmar cobertura de banda ancha satelital (ej. Starlink).', state: 0 },
+
+            // Legal y Trámites
+            { id: 14, cat: 'legal', text: 'Asegurar que el certificado de "Uso de Suelo" del Plan Regulador permite exactamente lo que quiere hacer (construir casa, local o torre).', state: 0 },
+            { id: 15, cat: 'legal', text: 'Si hay ríos, quebradas o nacientes cerca, pedir a un topógrafo confirmar que su zona de construcción respeta el margen legal (retiro) de no construir.', state: 0 },
+            { id: 16, cat: 'legal', text: 'Pedir documento de "Disponibilidad de Agua" a la ASADA o Acueducto, o asegurar que la finca tiene permiso legal para perforar u obtener agua.', state: 0 },
+            { id: 17, cat: 'legal', text: 'Confirmar "Disponibilidad de Electricidad". Revisar en la web de Aresep si el proveedor de la zona tiene averías o problemas frecuentes de apagones.', state: 0 },
+            { id: 18, cat: 'legal', text: 'Si el lote tiene árboles grandes, investigar si requiere permisos estrictos de tala que puedan atrasar todo el proyecto por años.', state: 0 },
+            { id: 19, cat: 'legal', text: 'Permisos Ambientales (SETENA): Si aplica, confirmar viabilidad mediante Formulario D1 (impacto bajo) o EsIA. El antiguo mandato de formulario D2 ya no se usa para estos proyectos.', state: 0 },
+
+            // Agua y Plomería
+            { id: 20, cat: 'agua', text: 'Evitar construir sobre suelos "franco arcillosos" o "limo arcillosos". Son impermeables, hunden la casa con el tiempo y obligan a gastar mucho dinero rellenando el terreno con material firme.', state: 0 },
+            { id: 21, cat: 'agua', text: 'El tubo principal de agua debe entrar primero a una zona exterior (para alimentar un futuro tanque de reserva) y de ahí repartirse hacia toda la casa mediante tuberías secundarias colocadas en zonas fáciles de romper como el patio.', state: 0 },
+            { id: 22, cat: 'agua', text: 'Tener una válvula "check" (solo fluye interrumpe el agua de vuelta a la calle) justo después del medidor principal. Es clave para instalar luego un tanque y bomba.', state: 0 },
+            { id: 23, cat: 'agua', text: 'Bomba hidroneumática adecuada si se requiere presión (ej. bomba de 20 Litros para 1 planta; 60 Litros para 2 plantas y usar 2 duchas al mismo tiempo).', state: 0 },
+            { id: 24, cat: 'agua', text: 'Dejar tubería prevista para colocar un filtro de agua general para toda la casa filtrada, salidas al lavaplatos y refrigeradora (ice maker).', state: 0 },
+            { id: 25, cat: 'agua', text: 'Asegurar que los tubos hacia llaves de agua entren de la calle en ángulo muy directo sin esquinas raras en baños, cocinas y pilas para fácil reparación de las botellas de agua.', state: 0 },
+            { id: 26, cat: 'agua', text: 'Tanque Séptico de Aguas Negras: Debe estar accesible a la calle para que un camión lo pueda vaciar; meter la tubería más ancha posible y evitar curvas atascables.', state: 0 },
+            { id: 27, cat: 'agua', text: 'Prueba Extrema: Echar una gran cantidad de papel higiénico al inodoro y jalar la cadena. Debe irse todo completo a la alcantarillada o tanque sin devolver chorros y atascos.', state: 0 },
+
+            // Electricidad
+            { id: 28, cat: 'electricidad', text: 'Analizar el aparato de calentar agua: Termoducha gasta +-60KW mensuales, Tanque caliente en el techo gasta +-180KW. Considerar prever colocar un calentador por inducción magnética eléctrico para un gran ahorro.', state: 0 },
+            { id: 29, cat: 'electricidad', text: 'Buscar que la acometida eléctrica principal vaya por la vía exterior techo o pared simple, ingresando hacia el centro con cajas de revisión de líneas a 90° de registro. Ocultar esto debajo del piso es un gran error que le castigará si necesita cambiar circuitos.', state: 0 },
+            { id: 30, cat: 'electricidad', text: 'Tomacorrientes en Paredes: Exigir que todos estén puestos a más de un (1) metro de alto sobre el piso. Se salva la tele en inundaciones, el niño evito accidentes y facilita en el caso de personas muy discapacitadas.', state: 0 },
+            { id: 31, cat: 'electricidad', text: 'Aprobar que toda la instalación cuenta con la espiga principal de tierra o aterramiento (un alambre robusto color verde a una varilla metálica gruesa clavada) fundamental, de otra manera cada aparato de la casa se puede quemar.', state: 0 },
+            { id: 32, cat: 'electricidad', text: 'Visualizar si hay salidas de alto calibre preparadas "220" Volts que se usarían para cocinas o aires potentes. De vez en vez considerar una línea apartada prevista del poste principal en caso de uso de una planta eléctrica o kit solar mediano.', state: 0 },
+
+            // Estructura, Diseño y Acabados (SÓLO CASAS)
+            { id: 33, cat: 'estructura', text: 'Orientación Frontal de la Vivienda: Procurar estar alineado viendo de Norte a Sur, por motivos de evitar calor extremo. Al Este entra mucho calor de resolana matutina y al Oeste será una sauna incandescente al asolearse en la caída de tarde.', state: 0 },
+            { id: 34, cat: 'estructura', text: 'En casa hecha dentro de condominio evitar a toda costa si usted es quien compra residir a la par de depósitos grupales basureros e inmediatez de la zona de fiesta, siempre buscar zonas como las alamedas (calles que no cruzan).', state: 0 },
+            { id: 35, cat: 'estructura', text: 'Un requisito irremplazable: visitar el lugar y casa de sus sueños en época muy lluviosa y asimilar si los canales se derraman adentro o todo esta lleno y gotea paredes de piso a piso en el viento en las vecindades o techo propio e invasión de lodo y si colapsan desagues del patio frontal y zanjas públicas vecinales adyacentes.', state: 0 },
+            { id: 36, cat: 'estructura', text: 'Igualmente, recorrer todo aposento cerrado pero esta vez de pleno medio sol de calor 12 del día para poder valorar si la forma de hacer sombra general por árboles le afecta o en definitiva la circulación de aire en cada aposento se nota asfixiante.', state: 0 },
+            { id: 37, cat: 'estructura', text: 'Organización Interna: Es fundamental constatar que áreas del medio baño y salas sociables tienen la ubicación desde donde usted ingresa la casa con el objetivo principal de evitar pasear a extraños en la privacidad de las camas traseras.', state: 0 },
+            { id: 38, cat: 'estructura', text: 'Cada piso encuadrado donde exista uso fuerte de agua en lavandería pila baño o fregadero general debe poseer un desnivel de caída a sus drenajes y estos ser ubicados opuestos en caso a donde hay escapes o habitaciones amuebladas y piso en madera laminada u alfombrado.', state: 0 },
+            { id: 39, cat: 'estructura', text: 'La cubierta del techado debe ser del perfil tipo "Zinc Estructural de dos aguas inclinadas". De estar equipados de canoas "muy anchas y fuertes" si es que los aguaceros las rebasan y de disponer "Tragaluces por la base" (o hasta trasluz óptico modernos). Todo sea prevenir derrames que le cuesten millones y le dañen muebles de línea por inundación de agua con el nuevo cambio climático agudo.', state: 0 },
+            { id: 40, cat: 'estructura', text: 'Si lo han contemplado la sala incluye las llamadas previstas (o sea, ductos del muro) las cuales por ahí en un futuro la ropa que expulse el caliente de la secadora y campana extractor de grasiento de estufa no ahume la casa vaciando su salida de la vivienda.', state: 0 },
+            { id: 41, cat: 'estructura', text: 'Mire que dejen salidas de los cables de las redes al menos en dobles terminales por cuadro habitacional ya que usted cambiará de sitio todas sus piezas en camas cada seis o nueve tiempos si busca otra posición del cuadro televisivo.', state: 0 },
+            { id: 42, cat: 'estructura', text: '¿Poseen repuesto del pisado? Muchas compañías hacen diseños únicos muy baratos y sacan de venta el estampado. Por ello debe solicitar que tengan unas tres cajas repletas solo de baldosas u laminados y cerámica sobrante del piso original si alguna llega trizada en los años a futuro.', state: 0 },
+            { id: 43, cat: 'estructura', text: 'Sugerencia simple a tomar en caso ser piso arcilloso oscuro la tierra exterior del campo evite en el interior color pálidos blanqueados u sisas muy perla ya que con el uso constante de pasos siempre estarán percudidas. Observe que el tanque de sentarse le sirva botar la gran mitad con un click doble o le adicionan un orinal macho evite gastar 12L adicionales a una casa con hijos chicos.', state: 0 },
+            { id: 44, cat: 'estructura', text: 'Duchas sin divisiones a ras de pie al entrar. Pasillos anchos sin rodapiés salidos u umbrales abultados. Ancho del pórtico central bastante extenso o a 90 centímetros. Esto debido para si necesita sacar a un adulto grave usando silla con llantas de camilla en tiempo y un socorrista tenga libertad a moverse.', state: 0 },
+            { id: 45, cat: 'estructura', text: 'Fíjese de reojo y analice al girar si las de acabados baldosas empotradas, rodapiés, vidrios cerámicas importadas caras u lavatorios que dicen "Lujoso Italiano Original Cúbico" en las cocederas o mármol que vienen al reverso su "Número de Serie". Así le garantizarán a la no mentira y cobrándole falsas hechas por imitación o marca comercial blanca.', state: 0 }
+        ];
+
+        // State Management - States: 0(Pending), 1(Verde), 2(Amarillo), 3(Rojo), 4(N/A)
+        let currentFilter = 'todos';
+
+        // 2. Initialization
+        document.addEventListener('DOMContentLoaded', () => {
+            renderFilters();
+            renderCategoryLightsContainer();
+            renderChecklist();
+            updateDashboard();
+        });
+
+        // 3. UI Generation Functions
+        function renderFilters() {
+            const container = document.getElementById('category-filters');
+            
+            let btnAll = document.createElement('button');
+            btnAll.className = `px-4 py-2 rounded-full text-sm font-semibold transition-colors border ${currentFilter === 'todos' ? 'bg-stone-800 text-white border-stone-800' : 'bg-white text-stone-600 border-stone-300 hover:bg-stone-100'}`;
+            btnAll.innerText = '📋 Todos';
+            btnAll.onclick = () => setFilter('todos');
+            container.appendChild(btnAll);
+
+            for (const [key, data] of Object.entries(categories)) {
+                let btn = document.createElement('button');
+                btn.className = `px-4 py-2 rounded-full text-sm font-semibold transition-colors border ${currentFilter === key ? 'bg-stone-800 text-white border-stone-800' : 'bg-white text-stone-600 border-stone-300 hover:bg-stone-100'}`;
+                btn.innerHTML = `${data.icon} ${data.name}`;
+                btn.onclick = () => setFilter(key);
+                container.appendChild(btn);
+            }
+        }
+
+        function renderCategoryLightsContainer() {
+            const container = document.getElementById('category-lights');
+            for (const [key, data] of Object.entries(categories)) {
+                container.innerHTML += `
+                    <div class="flex items-center justify-between p-2 hover:bg-stone-50 rounded-lg transition-colors border border-transparent hover:border-stone-100">
+                        <div class="flex items-center gap-2">
+                            <span>${data.icon}</span>
+                            <span class="text-sm font-semibold text-stone-700">${data.name}</span>
+                        </div>
+                        <div id="tl-cat-${key}" class="tl-mini"></div>
+                    </div>
+                `;
+            }
+        }
+
+        function setFilter(filterKey) {
+            currentFilter = filterKey;
+            document.getElementById('category-filters').innerHTML = '';
+            renderFilters();
+            renderChecklist();
+        }
+
+        function renderChecklist() {
+            const container = document.getElementById('checklist-container');
+            container.innerHTML = '';
+
+            const filteredData = currentFilter === 'todos' 
+                ? auditData 
+                : auditData.filter(item => item.cat === currentFilter);
+
+            if (filteredData.length === 0) {
+                container.innerHTML = '<p class="p-4 text-stone-500">No hay elementos en esta categoría.</p>';
+                return;
+            }
+
+            filteredData.forEach(item => {
+                const catData = categories[item.cat];
+                
+                let borderClass = 'border-stone-200';
+                let bgClass = 'bg-white';
+                
+                if(item.state === 1) { borderClass = 'border-emerald-400'; bgClass = 'bg-emerald-50'; }
+                if(item.state === 2) { borderClass = 'border-amber-400'; bgClass = 'bg-amber-50'; }
+                if(item.state === 3) { borderClass = 'border-rose-400'; bgClass = 'bg-rose-50'; }
+                if(item.state === 4) { borderClass = 'border-stone-300'; bgClass = 'bg-stone-100 opacity-60'; }
+
+                const el = document.createElement('div');
+                el.className = `p-4 mb-3 rounded-lg border ${borderClass} ${bgClass} transition-all duration-200`;
+                el.innerHTML = `
+                    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+                        <div class="flex-grow">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded" style="background-color: ${catData.color}15; color: ${catData.color}">
+                                    ${catData.icon} ${catData.name}
+                                </span>
+                            </div>
+                            <p class="text-sm text-stone-800 leading-relaxed">${item.text}</p>
+                        </div>
+                        <div class="flex flex-wrap sm:flex-col gap-1 min-w-[120px]">
+                            <button onclick="updateState(${item.id}, 1)" class="text-xs py-1.5 px-2 rounded font-medium border ${item.state === 1 ? 'bg-emerald-500 text-white border-emerald-600 shadow-inner' : 'bg-white text-emerald-700 border-emerald-200 hover:bg-emerald-50'} transition-colors">🟢 Verde</button>
+                            <button onclick="updateState(${item.id}, 2)" class="text-xs py-1.5 px-2 rounded font-medium border ${item.state === 2 ? 'bg-amber-500 text-white border-amber-600 shadow-inner' : 'bg-white text-amber-700 border-amber-200 hover:bg-amber-50'} transition-colors">🟡 Amarillo</button>
+                            <button onclick="updateState(${item.id}, 3)" class="text-xs py-1.5 px-2 rounded font-medium border ${item.state === 3 ? 'bg-rose-500 text-white border-rose-600 shadow-inner' : 'bg-white text-rose-700 border-rose-200 hover:bg-rose-50'} transition-colors">🔴 Rojo</button>
+                            <button onclick="updateState(${item.id}, 4)" class="text-xs py-1 px-2 rounded font-medium border text-stone-500 hover:bg-stone-200 transition-colors ${item.state === 4 ? 'bg-stone-200 border-stone-300 shadow-inner' : 'bg-white border-stone-200'}">⚪ N/A</button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(el);
+            });
+        }
+
+        // 4. Logic & State Handlers
+        function updateState(id, newState) {
+            const itemIndex = auditData.findIndex(i => i.id === id);
+            if (itemIndex > -1) {
+                // Toggle off if clicking the same active state
+                auditData[itemIndex].state = auditData[itemIndex].state === newState ? 0 : newState;
+                
+                renderChecklist();
+                updateDashboard();
+            }
+        }
+
+        function updateDashboard() {
+            let vCount = 0, aCount = 0, rCount = 0, assessed = 0, totalAppliable = 0;
+            
+            // Map to store states per category to determine mini lights
+            const catStates = {};
+            for (const key in categories) {
+                catStates[key] = { v: 0, a: 0, r: 0, total: 0 };
+            }
+
+            auditData.forEach(i => {
+                if(i.state !== 4 && i.state !== 0) {
+                    if(i.state === 1) { vCount++; catStates[i.cat].v++; }
+                    if(i.state === 2) { aCount++; catStates[i.cat].a++; }
+                    if(i.state === 3) { rCount++; catStates[i.cat].r++; }
+                }
+                if(i.state !== 4) totalAppliable++; 
+                if(i.state !== 0) assessed++;
+            });
+
+            // Update Counters
+            document.getElementById('count-verde').innerText = vCount;
+            document.getElementById('count-amarillo').innerText = aCount;
+            document.getElementById('count-rojo').innerText = rCount;
+
+            // Update Progress Bar
+            const totalItems = auditData.length;
+            const progressPercent = totalItems === 0 ? 0 : Math.round((assessed / totalItems) * 100);
+            document.getElementById('overall-progress').style.width = `${progressPercent}%`;
+            document.getElementById('progress-text').innerText = `${progressPercent}% auditado (${assessed}/${totalItems})`;
+
+            // Semáforos por Tema calculos
+            for (const key in categories) {
+                const s = catStates[key];
+                const tlEl = document.getElementById(`tl-cat-${key}`);
+                tlEl.className = 'tl-mini'; // reset
+                
+                if(s.v + s.a + s.r === 0) {
+                    // off
+                } else if(s.r > 0) {
+                    tlEl.classList.add('red-on');
+                } else if(s.a > 0) {
+                    tlEl.classList.add('yellow-on');
+                } else if(s.v > 0) {
+                    tlEl.classList.add('green-on');
+                }
+            }
+
+            // Semáforo General Cálculo
+            const glRed = document.getElementById('light-general-red');
+            const glYellow = document.getElementById('light-general-yellow');
+            const glGreen = document.getElementById('light-general-green');
+            const statusText = document.getElementById('general-status-text');
+
+            glRed.classList.remove('red-on');
+            glYellow.classList.remove('yellow-on');
+            glGreen.classList.remove('green-on');
+
+            if(vCount === 0 && aCount === 0 && rCount === 0) {
+                statusText.innerText = 'Sin Evaluar';
+                statusText.className = 'text-sm font-semibold text-stone-600 text-center uppercase tracking-wider mt-2';
+            } else {
+                // Determine general state
+                // General Rojo: >= 2 puntos en Rojo
+                // General Amarillo: 1 Rojo OR >= 3 Amarillos
+                // General Verde: 0 Rojos AND <= 2 Amarillos
+                
+                if (rCount >= 2) {
+                    glRed.classList.add('red-on');
+                    statusText.innerText = 'RIESGO ALTO (ROJO)';
+                    statusText.className = 'text-sm font-bold text-rose-600 text-center uppercase tracking-wider mt-2';
+                } else if (rCount === 1 || aCount >= 3) {
+                    glYellow.classList.add('yellow-on');
+                    statusText.innerText = 'PRECAUCIÓN (AMARILLO)';
+                    statusText.className = 'text-sm font-bold text-amber-600 text-center uppercase tracking-wider mt-2';
+                } else {
+                    glGreen.classList.add('green-on');
+                    statusText.innerText = 'VIABLE (VERDE)';
+                    statusText.className = 'text-sm font-bold text-emerald-600 text-center uppercase tracking-wider mt-2';
+                }
+            }
+        }
+    </script>
+</body>
+</html>
