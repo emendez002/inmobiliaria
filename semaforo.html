@@ -155,7 +155,7 @@
                         </div>
                     </div>
                     <p class="text-xs text-stone-400 mt-4 leading-tight text-center">
-                        Los amarillos implican prevención temporal o mayores costos. Los rojos señalan un riesgo crítico que exige replantear la inversión.
+                        Los amarillos implican prevención temporal o mayores costos. Los rojos señalan un riesgo crítico que exige replantear la inversión. En ambos casos le recomendamos buscar el criterio experto de AgriCien.
                     </p>
                 </div>
 
@@ -180,44 +180,48 @@
             'legal': { name: 'Legal y Trámites (Lote/Casa)', icon: '⚖️', color: '#0369a1' },     // Sky
             'agua': { name: 'Agua y Plomería (Lote/Casa)', icon: '💧', color: '#0e7490' },     // Cyan
             'electricidad': { name: 'Electricidad (Lote/Casa)', icon: '⚡', color: '#eab308' },    // Yellow
-            'estructura': { name: 'Estructura y Acabados (Solo Casa Construida)', icon: '🏠', color: '#44403c' } // Stone
+            'comprar_lote': { name: 'Recomendaciones al Comprar Lote', icon: '🏕️', color: '#16a34a' }, // Green
+            'construccion': { name: 'Recomendaciones al Construir', icon: '🚧', color: '#c2410c' }, // Orange
+            'estructura': { name: 'Estructura y Acabados (Solo Casa Construida)', icon: '🏠', color: '#44403c' }, // Stone
+            'ninos': { name: 'Niños y Familia', icon: '👶', color: '#be185d' },    // Pink
+            'mascotas': { name: 'Mascotas', icon: '🐕', color: '#c2410c' } // Orange
         };
 
         const auditData = [
             // Geología y Entorno
-            { id: 1, cat: 'entorno', text: 'Observar que NO haya rocas muy redondas en el terreno o bordes (son evidencia de que por ahí pasan corrientes fuertes de agua que arrastran materiales).', state: 0 },
-            { id: 2, cat: 'entorno', text: 'Revisar si en los paredones vecinos hay tierra mezclada con rocas de varios tamaños (grandes, medianas y pequeñas). Esto indica que el terreno fue formado por deslizamientos o inundaciones previas y podría repetirse.', state: 0 },
-            { id: 3, cat: 'entorno', text: 'Buscar si en la montaña o paredón hay marcas con forma de "cuchara de helado". Es la huella de un deslizamiento antiguo. En geología, lo que pasó antes volverá a ocurrir.', state: 0 },
-            { id: 4, cat: 'entorno', text: 'Caminar por la calle y aceras frontales asegurando que no haya hundimientos o grietas marcadas (estas grietas delatan suelos inestables, muy arcillosos o que se están resbalando lentamente).', state: 0 },
-            { id: 5, cat: 'entorno', text: 'Si compra lote: hacer un hueco pequeño, llenarlo de agua y ver si se absorbe rápido. Si el agua se queda estancada mucho tiempo, el suelo es arcilloso. Esto encarece los cimientos y complica usar un tanque de aguas negras.', state: 0 },
+            { id: 1, cat: 'entorno', text: 'Observar que NO haya rocas muy redondas en el terreno o bordes (son evidencia de que por ahí pasan corrientes fuertes de agua que arrastran materiales).', state: 0, lblV: '🟢 NO se observan', lblA: '🟡 Pocas', lblR: '🔴 Sí se observan' },
+            { id: 2, cat: 'entorno', text: 'Revisar si en los paredones vecinos hay tierra mezclada con rocas de varios tamaños (grandes, medianas y pequeñas). Esto indica que el terreno fue formado por deslizamientos o inundaciones previas y podría repetirse.', state: 0, lblV: '🟢 NO se observa', lblA: '🟡 Levemente', lblR: '🔴 Sí se observa' },
+            { id: 3, cat: 'entorno', text: 'Buscar si en la montaña o paredón hay marcas con forma de "cuchara de helado". Es la huella de un deslizamiento antiguo. En geología, lo que pasó antes volverá a ocurrir.', state: 0, lblV: '🟢 NO se observan', lblA: '🟡 Dudoso', lblR: '🔴 Sí se observan' },
+            { id: 4, cat: 'entorno', text: 'Caminar por la calle y aceras frontales asegurando que no haya hundimientos o grietas marcadas (estas grietas delatan suelos inestables, muy arcillosos o que se están resbalando lentamente).', state: 0, lblV: '🟢 NO se observan', lblA: '🟡 Leves fisuras', lblR: '🔴 Sí se observan hundimientos' },
+            { id: 5, cat: 'comprar_lote', text: 'Si compra lote: hacer un hueco pequeño, llenarlo de agua y ver si se absorbe rápido. Si el agua se queda estancada mucho tiempo, el suelo es arcilloso. Esto encarece los cimientos y complica usar un tanque de aguas negras.', state: 0, lblV: '🟢 Se absorbe rápido', lblA: '🟡 Tanta en absorber', lblR: '🔴 Agua estancada' },
             { id: 6, cat: 'entorno', text: 'Comprar una ubicación donde el viento NO sople desde la ciudad hacia su casa, para evitar que el aire arrastre la contaminación hacia su propiedad.', state: 0 },
-            { id: 7, cat: 'entorno', text: 'Verificar lejanía absoluta de rellenos sanitarios, botaderos, línea del tren o terminales de buses para blindarse contra ruidos fuertes, malos olores y contaminación química.', state: 0 },
+            { id: 7, cat: 'entorno', text: 'Verificar lejanía absoluta de rellenos sanitarios, botaderos, línea del tren o terminales de buses para blindarse contra ruidos fuertes, malos olores y contaminación química.', state: 0, lblV: '🟢 NO se observan', lblA: '🟡 Algo cerca', lblR: '🔴 Sí se observan cerca' },
             
             // Servicios e Internet
-            { id: 8, cat: 'servicios', text: 'Observar los techos de las casas vecinas. Si casi todos tienen tanques de reserva de agua a la vista, es una zona con problemas graves de escasez de agua.', state: 0 },
-            { id: 9, cat: 'servicios', text: 'Buscar un hidrante de los bomberos en la cuadra. Ante un incendio, tener agua cerca salva vidas.', state: 0 },
-            { id: 10, cat: 'servicios', text: 'Mirar el frente del terreno y confirmar que NO hay postes de luz grandes, alcantarillas o infraestructura pública atravesados que impidan meter un vehículo a la propiedad.', state: 0 },
+            { id: 8, cat: 'servicios', text: 'Observar los techos de las casas vecinas. Si casi todos tienen tanques de reserva de agua a la vista, es una zona con problemas graves de escasez de agua.', state: 0, lblV: '🟢 NO se observan', lblA: '🟡 Algunos', lblR: '🔴 Sí se observan' },
+            { id: 9, cat: 'servicios', text: 'Buscar un hidrante de los bomberos en la cuadra. Ante un incendio, tener agua cerca salva vidas.', state: 0, lblV: '🟢 Sí hay hidrante', lblA: '🟡 Hidrante lejano', lblR: '🔴 NO hay hidrantes' },
+            { id: 10, cat: 'servicios', text: 'Mirar el frente del terreno y confirmar que NO hay postes de luz grandes, alcantarillas o infraestructura pública atravesados que impidan meter un vehículo a la propiedad.', state: 0, lblV: '🟢 NO se observan', lblA: '🟡 Obstrucción parcial', lblR: '🔴 Sí se observan' },
             { id: 11, cat: 'servicios', text: 'Prueba de tráfico: Usar Waze o Google Maps en horas pico (7am - 5pm) para comprobar si el tiempo de viaje realista entre la casa y el trabajo/escuela es soportable.', state: 0 },
             { id: 12, cat: 'servicios', text: 'Caminar por el barrio asegurando que el acceso a paradas de bus o transporte público sea seguro y cercano (si algún miembro de la familia lo ocupará).', state: 0 },
             { id: 13, cat: 'servicios', text: 'Confirmar opciones de Internet: Si hay fibra óptica disponible en la calle mucho mejor, si no confirmar cobertura de banda ancha satelital (ej. Starlink).', state: 0 },
 
             // Legal y Trámites
-            { id: 14, cat: 'legal', text: 'Asegurar que el certificado de "Uso de Suelo" del Plan Regulador permite exactamente lo que quiere hacer (construir casa, local o torre).', state: 0 },
+            { id: 14, cat: 'comprar_lote', text: 'Asegurar que el certificado de "Uso de Suelo" del Plan Regulador permite exactamente lo que quiere hacer (construir casa, local o torre).', state: 0, lblV: '🟢 Sí lo permite', lblA: '🟡 Permiso parcial', lblR: '🔴 NO permite' },
             { id: 15, cat: 'legal', text: 'Si hay ríos, quebradas o nacientes cerca, pedir a un topógrafo confirmar que su zona de construcción respeta el margen legal (retiro) de no construir.', state: 0 },
             { id: 16, cat: 'legal', text: 'Pedir documento de "Disponibilidad de Agua" a la ASADA o Acueducto, o asegurar que la finca tiene permiso legal para perforar u obtener agua.', state: 0 },
             { id: 17, cat: 'legal', text: 'Confirmar "Disponibilidad de Electricidad". Revisar en la web de Aresep si el proveedor de la zona tiene averías o problemas frecuentes de apagones.', state: 0 },
-            { id: 18, cat: 'legal', text: 'Si el lote tiene árboles grandes, investigar si requiere permisos estrictos de tala que puedan atrasar todo el proyecto por años.', state: 0 },
-            { id: 19, cat: 'legal', text: 'Permisos Ambientales (SETENA): Si aplica, confirmar viabilidad mediante Formulario D1 (impacto bajo) o EsIA. El antiguo mandato de formulario D2 ya no se usa para estos proyectos.', state: 0 },
+            { id: 18, cat: 'comprar_lote', text: 'Si el lote tiene árboles grandes, investigar si requiere permisos estrictos de tala que puedan atrasar todo el proyecto por años.', state: 0, lblV: '🟢 NO requiere/Simple', lblA: '🟡 Permisos moderados', lblR: '🔴 Prohibido/Estricto' },
+            { id: 19, cat: 'legal', text: 'Permisos Ambientales (SETENA): Le indicarán si requiere EsIA o PGA y Regencia Ambiental.', state: 0 },
 
             // Agua y Plomería
-            { id: 20, cat: 'agua', text: 'Evitar construir sobre suelos "franco arcillosos" o "limo arcillosos". Son impermeables, hunden la casa con el tiempo y obligan a gastar mucho dinero rellenando el terreno con material firme.', state: 0 },
-            { id: 21, cat: 'agua', text: 'El tubo principal de agua debe entrar primero a una zona exterior (para alimentar un futuro tanque de reserva) y de ahí repartirse hacia toda la casa mediante tuberías secundarias colocadas en zonas fáciles de romper como el patio.', state: 0 },
-            { id: 22, cat: 'agua', text: 'Tener una válvula "check" (solo fluye interrumpe el agua de vuelta a la calle) justo después del medidor principal. Es clave para instalar luego un tanque y bomba.', state: 0 },
-            { id: 23, cat: 'agua', text: 'Bomba hidroneumática adecuada si se requiere presión (ej. bomba de 20 Litros para 1 planta; 60 Litros para 2 plantas y usar 2 duchas al mismo tiempo).', state: 0 },
-            { id: 24, cat: 'agua', text: 'Dejar tubería prevista para colocar un filtro de agua general para toda la casa filtrada, salidas al lavaplatos y refrigeradora (ice maker).', state: 0 },
-            { id: 25, cat: 'agua', text: 'Asegurar que los tubos hacia llaves de agua entren de la calle en ángulo muy directo sin esquinas raras en baños, cocinas y pilas para fácil reparación de las botellas de agua.', state: 0 },
-            { id: 26, cat: 'agua', text: 'Tanque Séptico de Aguas Negras: Debe estar accesible a la calle para que un camión lo pueda vaciar; meter la tubería más ancha posible y evitar curvas atascables.', state: 0 },
-            { id: 27, cat: 'agua', text: 'Prueba Extrema: Echar una gran cantidad de papel higiénico al inodoro y jalar la cadena. Debe irse todo completo a la alcantarillada o tanque sin devolver chorros y atascos.', state: 0 },
+            { id: 20, cat: 'agua', text: 'Evitar construir sobre suelos "franco arcillosos" o "limo arcillosos". Son impermeables, hunden la casa con el tiempo y obligan a gastar mucho dinero rellenando el terreno con material firme.', state: 0, lblV: '🟢 NO se observa', lblA: '🟡 Parcial arcilloso', lblR: '🔴 Sí se observa arcilla' },
+            
+            // Recomendaciones al Construir
+            { id: 21, cat: 'construccion', text: 'El tubo principal de agua debe entrar primero a una zona exterior (para alimentar un futuro tanque de reserva) y de ahí repartirse hacia toda la casa mediante tuberías secundarias colocadas en zonas fáciles de romper como el patio.', state: 0 },
+            { id: 22, cat: 'construccion', text: 'Tener una válvula "check" (solo fluye interrumpe el agua de vuelta a la calle) justo después del medidor principal. Es clave para instalar luego un tanque y bomba.', state: 0 },
+            { id: 23, cat: 'construccion', text: 'Bomba hidroneumática adecuada si se requiere presión (ej. bomba de 20 Litros para 1 planta; 60 Litros para 2 plantas y usar 2 duchas al mismo tiempo).', state: 0 },
+            { id: 24, cat: 'construccion', text: 'Dejar tubería prevista para colocar un filtro de agua general para toda la casa filtrada, salidas al lavaplatos y refrigeradora (ice maker).', state: 0 },
+            { id: 25, cat: 'construccion', text: 'Asegurar que los tubos hacia llaves de agua entren de la calle en ángulo muy directo sin esquinas raras en baños, cocinas y pilas para fácil reparación de las botellas de agua.', state: 0 },
 
             // Electricidad
             { id: 28, cat: 'electricidad', text: 'Analizar el aparato de calentar agua: Termoducha gasta +-60KW mensuales, Tanque caliente en el techo gasta +-180KW. Considerar prever colocar un calentador por inducción magnética eléctrico para un gran ahorro.', state: 0 },
@@ -227,9 +231,11 @@
             { id: 32, cat: 'electricidad', text: 'Visualizar si hay salidas de alto calibre preparadas "220" Volts que se usarían para cocinas o aires potentes. De vez en vez considerar una línea apartada prevista del poste principal en caso de uso de una planta eléctrica o kit solar mediano.', state: 0 },
 
             // Estructura, Diseño y Acabados (SÓLO CASAS)
+            { id: 26, cat: 'estructura', text: 'Tanque Séptico de Aguas Negras: Debe estar accesible a la calle para que un camión lo pueda vaciar; meter la tubería más ancha posible y evitar curvas atascables.', state: 0 },
+            { id: 27, cat: 'estructura', text: 'Prueba Extrema: Echar una gran cantidad de papel higiénico al inodoro y jalar la cadena. Debe irse todo completo a la alcantarillada o tanque sin devolver chorros y atascos.', state: 0 },
             { id: 33, cat: 'estructura', text: 'Orientación Frontal de la Vivienda: Procurar estar alineado viendo de Norte a Sur, por motivos de evitar calor extremo. Al Este entra mucho calor de resolana matutina y al Oeste será una sauna incandescente al asolearse en la caída de tarde.', state: 0 },
             { id: 34, cat: 'estructura', text: 'En casa hecha dentro de condominio evitar a toda costa si usted es quien compra residir a la par de depósitos grupales basureros e inmediatez de la zona de fiesta, siempre buscar zonas como las alamedas (calles que no cruzan).', state: 0 },
-            { id: 35, cat: 'estructura', text: 'Un requisito irremplazable: visitar el lugar y casa de sus sueños en época muy lluviosa y asimilar si los canales se derraman adentro o todo esta lleno y gotea paredes de piso a piso en el viento en las vecindades o techo propio e invasión de lodo y si colapsan desagues del patio frontal y zanjas públicas vecinales adyacentes.', state: 0 },
+            { id: 35, cat: 'estructura', text: 'Un requisito irremplazable: visitar el lugar y casa de sus sueños en época muy lluviosa y asimilar si los canales se derraman adentro o todo esta lleno y gotea paredes de piso a piso en el viento en las vecindades o techo propio e invasión de lodo y si colapsan desagues del patio frontal y zanjas públicas vecinales adyacentes.', state: 0, lblV: '🟢 NO se observan', lblA: '🟡 Leve goteo', lblR: '🔴 Sí se observan derrames' },
             { id: 36, cat: 'estructura', text: 'Igualmente, recorrer todo aposento cerrado pero esta vez de pleno medio sol de calor 12 del día para poder valorar si la forma de hacer sombra general por árboles le afecta o en definitiva la circulación de aire en cada aposento se nota asfixiante.', state: 0 },
             { id: 37, cat: 'estructura', text: 'Organización Interna: Es fundamental constatar que áreas del medio baño y salas sociables tienen la ubicación desde donde usted ingresa la casa con el objetivo principal de evitar pasear a extraños en la privacidad de las camas traseras.', state: 0 },
             { id: 38, cat: 'estructura', text: 'Cada piso encuadrado donde exista uso fuerte de agua en lavandería pila baño o fregadero general debe poseer un desnivel de caída a sus drenajes y estos ser ubicados opuestos en caso a donde hay escapes o habitaciones amuebladas y piso en madera laminada u alfombrado.', state: 0 },
@@ -239,7 +245,15 @@
             { id: 42, cat: 'estructura', text: '¿Poseen repuesto del pisado? Muchas compañías hacen diseños únicos muy baratos y sacan de venta el estampado. Por ello debe solicitar que tengan unas tres cajas repletas solo de baldosas u laminados y cerámica sobrante del piso original si alguna llega trizada en los años a futuro.', state: 0 },
             { id: 43, cat: 'estructura', text: 'Sugerencia simple a tomar en caso ser piso arcilloso oscuro la tierra exterior del campo evite en el interior color pálidos blanqueados u sisas muy perla ya que con el uso constante de pasos siempre estarán percudidas. Observe que el tanque de sentarse le sirva botar la gran mitad con un click doble o le adicionan un orinal macho evite gastar 12L adicionales a una casa con hijos chicos.', state: 0 },
             { id: 44, cat: 'estructura', text: 'Duchas sin divisiones a ras de pie al entrar. Pasillos anchos sin rodapiés salidos u umbrales abultados. Ancho del pórtico central bastante extenso o a 90 centímetros. Esto debido para si necesita sacar a un adulto grave usando silla con llantas de camilla en tiempo y un socorrista tenga libertad a moverse.', state: 0 },
-            { id: 45, cat: 'estructura', text: 'Fíjese de reojo y analice al girar si las de acabados baldosas empotradas, rodapiés, vidrios cerámicas importadas caras u lavatorios que dicen "Lujoso Italiano Original Cúbico" en las cocederas o mármol que vienen al reverso su "Número de Serie". Así le garantizarán a la no mentira y cobrándole falsas hechas por imitación o marca comercial blanca.', state: 0 }
+            { id: 45, cat: 'estructura', text: 'Fíjese de reojo y analice al girar si las de acabados baldosas empotradas, rodapiés, vidrios cerámicas importadas caras u lavatorios que dicen "Lujoso Italiano Original Cúbico" en las cocederas o mármol que vienen al reverso su "Número de Serie". Así le garantizarán a la no mentira y cobrándole falsas hechas por imitación o marca comercial blanca.', state: 0 },
+            
+            // Niños y Familia
+            { id: 46, cat: 'ninos', text: 'Ventanas y Escaleras: Las escaleras deben tener barandas seguras sin espacios muy anchos donde quepa un niño, y las ventanas altas deben poder asegurarse.', state: 0, lblV: '🟢 Totalmente seguro', lblA: '🟡 Requiere mejoras', lblR: '🔴 Peligroso' },
+            { id: 47, cat: 'ninos', text: 'Zona de Juegos: Evaluar si el patio o el parque del condominio es céntrico, plano, cerrado y seguro para que los niños jueguen sin riesgo de acceso a autos o barrancos.', state: 0, lblV: '🟢 Seguro y cerrado', lblA: '🟡 Semi abierto', lblR: '🔴 Peligroso/Abierto' },
+            
+            // Mascotas
+            { id: 48, cat: 'mascotas', text: 'Cerramientos del lote: Confirmar que la propiedad cuente con tapias o mallas completas y en buen estado a la altura de su mascota (o que cuente con posibilidades fáciles y baratas de cerrarlo), sin huecos por los cuales pueda escapar.', state: 0, lblV: '🟢 Cerrado y seguro', lblA: '🟡 Huecos pequeños', lblR: '🔴 Mallas abiertas' },
+            { id: 49, cat: 'mascotas', text: 'Zonas Verdes y Reglamentos: Asegurarse de que exista un espacio exterior adecuado (tierra o zacate) y en caso de condominios, leer el reglamento previo para asegurar que se permitan su raza, peso y número de mascotas antes de firmar.', state: 0, lblV: '🟢 Todo apto', lblA: '🟡 Restricciones', lblR: '🔴 Prohibidas' }
         ];
 
         // State Management - States: 0(Pending), 1(Verde), 2(Amarillo), 3(Rojo), 4(N/A)
@@ -331,9 +345,9 @@
                             <p class="text-sm text-stone-800 leading-relaxed">${item.text}</p>
                         </div>
                         <div class="flex flex-wrap sm:flex-col gap-1 min-w-[120px]">
-                            <button onclick="updateState(${item.id}, 1)" class="text-xs py-1.5 px-2 rounded font-medium border ${item.state === 1 ? 'bg-emerald-500 text-white border-emerald-600 shadow-inner' : 'bg-white text-emerald-700 border-emerald-200 hover:bg-emerald-50'} transition-colors">🟢 Verde</button>
-                            <button onclick="updateState(${item.id}, 2)" class="text-xs py-1.5 px-2 rounded font-medium border ${item.state === 2 ? 'bg-amber-500 text-white border-amber-600 shadow-inner' : 'bg-white text-amber-700 border-amber-200 hover:bg-amber-50'} transition-colors">🟡 Amarillo</button>
-                            <button onclick="updateState(${item.id}, 3)" class="text-xs py-1.5 px-2 rounded font-medium border ${item.state === 3 ? 'bg-rose-500 text-white border-rose-600 shadow-inner' : 'bg-white text-rose-700 border-rose-200 hover:bg-rose-50'} transition-colors">🔴 Rojo</button>
+                            <button onclick="updateState(${item.id}, 1)" class="text-xs py-1.5 px-2 rounded font-medium border ${item.state === 1 ? 'bg-emerald-500 text-white border-emerald-600 shadow-inner' : 'bg-white text-emerald-700 border-emerald-200 hover:bg-emerald-50'} transition-colors">${item.lblV || '🟢 Verde'}</button>
+                            <button onclick="updateState(${item.id}, 2)" class="text-xs py-1.5 px-2 rounded font-medium border ${item.state === 2 ? 'bg-amber-500 text-white border-amber-600 shadow-inner' : 'bg-white text-amber-700 border-amber-200 hover:bg-amber-50'} transition-colors">${item.lblA || '🟡 Amarillo'}</button>
+                            <button onclick="updateState(${item.id}, 3)" class="text-xs py-1.5 px-2 rounded font-medium border ${item.state === 3 ? 'bg-rose-500 text-white border-rose-600 shadow-inner' : 'bg-white text-rose-700 border-rose-200 hover:bg-rose-50'} transition-colors">${item.lblR || '🔴 Rojo'}</button>
                             <button onclick="updateState(${item.id}, 4)" class="text-xs py-1 px-2 rounded font-medium border text-stone-500 hover:bg-stone-200 transition-colors ${item.state === 4 ? 'bg-stone-200 border-stone-300 shadow-inner' : 'bg-white border-stone-200'}">⚪ N/A</button>
                         </div>
                     </div>
