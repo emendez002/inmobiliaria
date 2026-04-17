@@ -182,6 +182,7 @@
             'electricidad': { name: 'Electricidad (Lote/Casa)', icon: '⚡', color: '#eab308' },    // Yellow
             'comprar_lote': { name: 'Recomendaciones al Comprar Lote', icon: '🏕️', color: '#16a34a' }, // Green
             'construccion': { name: 'Recomendaciones al Construir', icon: '🚧', color: '#c2410c' }, // Orange
+            'sostenibilidad': { name: 'Sostenibilidad y Acción Climática', icon: '🍃', color: '#15803d' }, // Green
             'estructura': { name: 'Estructura y Acabados (Solo Casa Construida)', icon: '🏠', color: '#44403c' }, // Stone
             'ninos': { name: 'Niños y Familia', icon: '👶', color: '#be185d' },    // Pink
             'mascotas': { name: 'Mascotas', icon: '🐕', color: '#c2410c' } // Orange
@@ -252,8 +253,14 @@
             { id: 47, cat: 'ninos', text: 'Zona de Juegos: Evaluar si el patio o el parque del condominio es céntrico, plano, cerrado y seguro para que los niños jueguen sin riesgo de acceso a autos o barrancos.', state: 0, lblV: '🟢 Seguro y cerrado', lblA: '🟡 Semi abierto', lblR: '🔴 Peligroso/Abierto' },
             
             // Mascotas
-            { id: 48, cat: 'mascotas', text: 'Cerramientos del lote: Confirmar que la propiedad cuente con tapias o mallas completas y en buen estado a la altura de su mascota (o que cuente con posibilidades fáciles y baratas de cerrarlo), sin huecos por los cuales pueda escapar.', state: 0, lblV: '🟢 Cerrado y seguro', lblA: '🟡 Huecos pequeños', lblR: '🔴 Mallas abiertas' },
-            { id: 49, cat: 'mascotas', text: 'Zonas Verdes y Reglamentos: Asegurarse de que exista un espacio exterior adecuado (tierra o zacate) y en caso de condominios, leer el reglamento previo para asegurar que se permitan su raza, peso y número de mascotas antes de firmar.', state: 0, lblV: '🟢 Todo apto', lblA: '🟡 Restricciones', lblR: '🔴 Prohibidas' }
+            { id: 48, cat: 'mascotas', text: 'Cerramientos del lote: Confirmar que la propiedad cuente con tapias o mallas completas y en buen estado a la altura de su mascota (o que cuente con posibilidades fáciles y baratas de cerrarlo), sin huecos por cual los cuales pueda escapar.', state: 0, lblV: '🟢 Cerrado y seguro', lblA: '🟡 Huecos pequeños', lblR: '🔴 Mallas abiertas' },
+            { id: 49, cat: 'mascotas', text: 'Zonas Verdes y Reglamentos: Asegurarse de que exista un espacio exterior adecuado (tierra o zacate) y en caso de condominios, leer el reglamento previo para asegurar que se permitan su raza, peso y número de mascotas antes de firmar.', state: 0, lblV: '🟢 Todo apto', lblA: '🟡 Restricciones', lblR: '🔴 Prohibidas' },
+
+            // Sostenibilidad
+            { id: 50, cat: 'sostenibilidad', text: 'Programa Bandera Azul Ecológica (PBAE): Consultar si la zona, comunidad o proyecto figura en los registros de Bandera Azul, lo que asegura buenas prácticas hídricas y comunitarias reales y no solo panfletos.', state: 0, lblV: '🟢 Galardón Activo', lblA: '🟡 En proceso', lblR: '🔴 Sin interés ecológico' },
+            { id: 51, cat: 'sostenibilidad', text: 'Programas de Gestión Ambiental (DIGECA): Si es un proyecto o condominio complejo, verificar que la constructora o administración posea lineamientos estrictos (tipo PGAI) para optimar su impacto eléctrico, hídrico y de basuras.', state: 0, lblV: '🟢 Programa Vigente', lblA: '🟡 Prácticas Informales', lblR: '🔴 Ningún Programa' },
+            { id: 52, cat: 'sostenibilidad', text: 'Resiliencia al Cambio Climático (MINAE): Verificar si el terreno posee áreas de terreno verdes y "permeables" reales para infiltrar el agua llovida. En tiempos de intensas lluvias, asfaltar o concretar el 100% colapsa aceras y genera inundaciones violentas en su calle.', state: 0, lblV: '🟢 Alta infiltración', lblA: '🟡 Medio concreto/tierra', lblR: '🔴 100% Pavimentado' },
+            { id: 53, cat: 'sostenibilidad', text: 'No caiga en Greenwashing: Dude de ideas "falsamente ecológicas" (ej. mingitorios "sin agua" en áreas públicas que se anuncian para ahorrar, pero terminan concentrando orina pura altamente tóxica y ácida directo hacia los cauces sin disolución). Prefiera sistemas de tratamiento biológico/mecánico certificados operando al 100%.', state: 0, lblV: '🟢 Tratamiento Real', lblA: '🟡 Pocas medidas', lblR: '🔴 Greenwashing obvio' }
         ];
 
         // State Management - States: 0(Pending), 1(Verde), 2(Amarillo), 3(Rojo), 4(N/A)
